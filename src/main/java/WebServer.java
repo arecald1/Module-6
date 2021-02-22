@@ -1,3 +1,5 @@
+import kong.unirest.GenericType;
+import kong.unirest.Unirest;
 import model.Course;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -5,19 +7,16 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static spark.Spark.*;
 
 public class WebServer {
     public static void main(String[] args) {
-        staticFiles.location("/public");
+        final String KEY = System.getenv("SIS_API_KEY");
+        Unirest.config().defaultBaseUrl("https://sis.jhu.edu/api");
 
-        List<Course> courses = new ArrayList<>();
-        courses.add(new Course("EN.500.112","GATEWAY COMPUTING: JAVA"));
-        courses.add(new Course("EN.601.220","INTERMEDIATE PROGRAMMING"));
-        courses.add(new Course("EN.601.226","DATA STRUCTURES"));
-        courses.add(new Course("EN.601.229","COMPUTER SYSTEM FUNDAMENTALS"));
-        courses.add(new Course("EN.601.231","AUTOMATA and COMPUTATION THEORY"));
+        staticFiles.location("/public");
 
         get("/", (req, res) -> {
             return new ModelAndView(null, "index.hbs");
@@ -25,6 +24,11 @@ public class WebServer {
 
         get("/search", (req, res) -> {
             String query = req.queryParams("query");
+            Set<Course> courses = Unirest.get("/classes")
+                    .queryString("Key", KEY)
+                    .queryString("CourseTitle", query)
+                    .asObject(new GenericType<Set<Course>>() {})
+                    .getBody();
             Map<String, Object> model = Map.of("query", query, "courses", courses);
             return new ModelAndView(model, "search.hbs");
         }, new HandlebarsTemplateEngine());
@@ -34,6 +38,7 @@ public class WebServer {
             res.redirect("/search?query=" + query);
             return null;
         }, new HandlebarsTemplateEngine());
+
 
 
 
