@@ -24,9 +24,17 @@ public class WebServer {
         }, new HandlebarsTemplateEngine());
 
         get("/search", (req, res) -> {
-            Map<String, Object> model = Map.of("courses", courses);
+            String query = req.queryParams("query");
+            Map<String, Object> model = Map.of("query", query, "courses", courses);
             return new ModelAndView(model, "search.hbs");
         }, new HandlebarsTemplateEngine());
+
+        post("/search", (req, res) -> {
+            String query = req.queryParams("query");
+            res.redirect("/search?query=" + query);
+            return null;
+        }, new HandlebarsTemplateEngine());
+
 
 
     }
