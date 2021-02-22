@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JHU Course Search</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-</head>
-<body>
-<div class="wrap">
-    <div class="title">Course Search</div>
-    <form class="search" action="/search" method="post">
-        <input type="text" class="searchTerm" placeholder="" name="query">
-        <button type="submit" class="searchButton">
-            <i class="fa fa-search"></i>
-        </button>
-    </form>
-</div>
-</body>
-</html>
+{{#block "header" }}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JHU Course Search</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    </head>
+    <body>
+{{/block }}
+
+{{#block "content" }}
+{{/block }}
+
+{{#block "footer" }}
+    </body>
+    </html>
+{{/block }}
