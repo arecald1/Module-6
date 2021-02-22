@@ -6,10 +6,11 @@
         </button>
     </form>
     <ul class="course-list">
-        <li class="course-list-item">EN.601.226 Data Structures</li>
-        <li class="course-list-item">EN.601.280 Full-Stack JavaScript</li>
-        <li class="course-list-item">EN.601.421 Object-Oriented Software Engineering</li>
+        {{#each courses}}
+            <li class="course-list-item">{{offeringName}} {{title}}</li>
+        {{/each}}
     </ul>
+
 {{/partial}}
 
 {{> base.hbs}}
